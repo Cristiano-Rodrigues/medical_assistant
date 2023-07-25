@@ -18,6 +18,9 @@
   },
   "homepage": "https://github.com/Cristiano-Rodrigues/medical_assistant#readme",
   "devDependencies": {
+    "@babel/core": "^7.22.9",
+    "@babel/preset-env": "^7.22.9",
+    "babel-jest": "^29.6.1",
     "jest": "^29.6.1"
   }
 }
