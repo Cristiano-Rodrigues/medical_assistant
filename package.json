@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/Cristiano-Rodrigues/medical_assistant/issues"
   },
-  "homepage": "https://github.com/Cristiano-Rodrigues/medical_assistant#readme"
+  "homepage": "https://github.com/Cristiano-Rodrigues/medical_assistant#readme",
+  "devDependencies": {
+    "jest": "^29.6.1"
+  }
 }
