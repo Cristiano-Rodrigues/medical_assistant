@@ -1,5 +1,4 @@
-import { InvalidEntry } from '../../errors/invalidEntry'
-import { ServerError } from '../../errors/serverError'
+import { InvalidEntry, ServerError } from '../../errors'
 
 export const invalidEntry = field => ({
   code: 400,

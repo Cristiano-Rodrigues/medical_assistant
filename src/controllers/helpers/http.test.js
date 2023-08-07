@@ -1,5 +1,4 @@
-import { InvalidEntry } from '../../errors/invalidEntry'
-import { ServerError } from '../../errors/serverError'
+import { InvalidEntry, ServerError } from '../../errors'
 import { invalidEntry, serverError, success } from './http'
 
 describe('http.js', () => {
