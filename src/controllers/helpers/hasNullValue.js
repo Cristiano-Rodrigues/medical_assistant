@@ -1,0 +1,1 @@
+export const hasNullValue = arr => arr.some(value => !value)

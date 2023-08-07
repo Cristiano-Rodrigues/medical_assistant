@@ -1,19 +1,6 @@
-import { InvalidEntry } from '../../errors/invalidEntry'
+import { hasNullValue } from '../helpers/hasNullValue'
+import { invalidEntry, serverError, success } from '../helpers/http'
 import { generateRandomCode } from '../helpers/random'
-
-const invalidEntry = field => ({
-  code: 400,
-  error: new InvalidEntry(field)
-})
-const hasNullValue = arr => arr.some(value => !value)
-const success = () => ({
-  code: 200,
-  success: true
-})
-const serverError = () => ({
-  code: 500,
-  error: new Error('Server Error')
-})
 
 export async function signup(req, {
   mailer,
