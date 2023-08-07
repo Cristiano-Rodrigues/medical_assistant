@@ -1,4 +1,5 @@
 import { InvalidEntry } from '../../errors/invalidEntry'
+import { ServerError } from '../../errors/serverError'
 import { invalidEntry, serverError, success } from './http'
 
 describe('http.js', () => {
@@ -12,7 +13,7 @@ describe('http.js', () => {
   test('serverError should return correct http response', () => {
     expect(serverError()).toEqual({
       code: 500,
-      error: new Error('Server Error')
+      error: new ServerError()
     })
   })
 
