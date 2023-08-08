@@ -8,7 +8,7 @@ export async function signup(req, {
   patientRepository
 }) {
   const requiredFields = [
-    'name', 'gender', 'born', 'address', 'phone', 'email', 'password'
+    'name', 'gender', 'born', 'email', 'password'
   ]
 
   if (hasNullValue(requiredFields.map(field => req.body[field]))) {

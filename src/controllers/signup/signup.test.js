@@ -26,7 +26,7 @@ const patientRepository = () => ({
 describe('Signup', () => {
   test('Should return InvalidEntry error if a required value is not given', async () => {
     const requiredFields = [
-      'name', 'gender', 'born', 'address', 'phone', 'email', 'password'
+      'name', 'gender', 'born', 'email', 'password'
     ]
     const response = await signup({
       body: {
