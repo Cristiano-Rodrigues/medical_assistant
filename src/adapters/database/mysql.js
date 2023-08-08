@@ -6,7 +6,7 @@ const createConnection = () => {
     host: process.env.HOST,
     user: process.env.USER,
     database: process.env.ENV === 'test' ?
-      process.env.DB : process.env.TEST_DB,
+      process.env.TEST_DB : process.env.DB,
     password: process.env.PASS,
     multipleStatements: true
   })
