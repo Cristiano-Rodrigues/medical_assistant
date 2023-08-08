@@ -71,9 +71,10 @@ describe('Signup', () => {
 
   test('Should call mailer with correct params', async () => {
     class MailerStub {
-      async send ({ type, content }) {
+      async send ({ type, to, content }) {
         expect(type).toBe('activation-code')
         expect(typeof content).toBe('number')
+        expect(to).toBe(req.body.email)
       }
     }
     await signup(req, {
