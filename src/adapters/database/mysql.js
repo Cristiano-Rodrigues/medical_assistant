@@ -5,7 +5,8 @@ const createConnection = () => {
   return mysql.createConnection({
     host: process.env.HOST,
     user: process.env.USER,
-    database: process.env.DB,
+    database: process.env.ENV === 'test' ?
+      process.env.DB : process.env.TEST_DB,
     password: process.env.PASS,
     multipleStatements: true
   })
