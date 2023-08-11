@@ -1,6 +1,9 @@
 import { InvalidEntry } from '../../errors/invalidEntry'
 import { signup } from './signup'
 import { faker } from '@faker-js/faker'
+import { InvalidEntry, ServerError } from '../../errors'
+import { req } from '../../test/patient'
+import { signup } from './signup'
 
 const req = {
   body: {
@@ -113,7 +116,7 @@ describe('Signup', () => {
   test('Should return server error if an unexpected error occurred', async () => {
     const patientRepository = () => ({
       create: (patient) => {
-        throw new Error('Server Error')
+        throw new ServerError()
       }
     })
     const response = await signup(req, {
@@ -123,7 +126,7 @@ describe('Signup', () => {
     })
     expect(response).toEqual({
       code: 500,
-      error: new Error('Server Error')
+      error: new ServerError()
     })
   })
 
