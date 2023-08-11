@@ -4,6 +4,7 @@ import {
 
 export async function signup(req, {
   mailer,
+  hasher,
   connection,
   patientRepository
 }) {
@@ -37,6 +38,7 @@ export async function signup(req, {
 
     await create({
       ...req.body,
+      password: hasher.hash(req.body.password),
       code
     })
 
