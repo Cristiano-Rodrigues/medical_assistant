@@ -1,8 +1,5 @@
 import mysql from 'mysql'
 import { promisify } from 'util'
-import dotenv from 'dotenv'
-
-dotenv.config()
 
 const createConnection = () => {
   const conn = mysql.createConnection({
