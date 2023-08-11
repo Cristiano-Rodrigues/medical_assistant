@@ -46,6 +46,6 @@ export async function signup(req, {
 
     return success()
   } catch (error) {
-    return serverError()
+    return serverError(error)
   }
 }
