@@ -1,30 +1,8 @@
-import { InvalidEntry } from '../../errors/invalidEntry'
-import { signup } from './signup'
 import { faker } from '@faker-js/faker'
+import { Mailer, Connection, patientRepository } from '../../tests/stubs'
+import { req } from '../../tests/patient'
 import { InvalidEntry, ServerError } from '../../errors'
-import { req } from '../../test/patient'
 import { signup } from './signup'
-
-const req = {
-  body: {
-    name: faker.person.fullName(),
-    gender: faker.person.sexType(),
-    born: faker.date.birthdate(),
-    address: faker.location.city(),
-    phone: faker.phone.number(),
-    email: faker.internet.email(),
-    password: faker.internet.password()
-  }
-}
-class MailerStub {
-  async send () {}
-}
-class ConnectionStub {
-  close () {}
-}
-const patientRepository = () => ({
-  create: () => {}
-})
 
 describe('Signup', () => {
   test('Should return InvalidEntry error if a required value is not given', async () => {
@@ -73,7 +51,7 @@ describe('Signup', () => {
   })
 
   test('Should call mailer with correct params', async () => {
-    class MailerStub {
+    class Mailer {
       async send ({ type, to, content }) {
         expect(type).toBe('activation-code')
         expect(typeof content).toBe('number')
@@ -81,8 +59,8 @@ describe('Signup', () => {
       }
     }
     await signup(req, {
-      mailer: new MailerStub(),
-      connection: new ConnectionStub(),
+      mailer: new Mailer(),
+      connection: new Connection(),
       patientRepository
     })
   })
@@ -94,21 +72,21 @@ describe('Signup', () => {
       }
     })
     await signup(req, {
-      mailer: new MailerStub(),
-      connection: new ConnectionStub(),
+      mailer: new Mailer(),
+      connection: new Connection(),
       patientRepository
     })
   })
 
   test('Should call connection.close function to after using repository', async () => {
-    class ConnectionStub {
+    class Connection {
       close () {
         expect(1).toBe(1)
       }
     }
     await signup(req, {
-      mailer: new MailerStub(),
-      connection: new ConnectionStub(),
+      mailer: new Mailer(),
+      connection: new Connection(),
       patientRepository
     })
   })
@@ -120,8 +98,8 @@ describe('Signup', () => {
       }
     })
     const response = await signup(req, {
-      mailer: new MailerStub(),
-      connection: new ConnectionStub(),
+      mailer: new Mailer(),
+      connection: new Connection(),
       patientRepository
     })
     expect(response).toEqual({
@@ -132,8 +110,8 @@ describe('Signup', () => {
 
   test('Should return success object if no error', async () => {
     const response = await signup(req, {
-      mailer: new MailerStub(),
-      connection: new ConnectionStub(),
+      mailer: new Mailer(),
+      connection: new Connection(),
       patientRepository
     })
 

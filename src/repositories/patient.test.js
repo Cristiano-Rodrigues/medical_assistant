@@ -1,6 +1,6 @@
 import { patientRepository } from './patient'
 import { connection } from '../adapters/database/mysql'
-import { req } from '../test/patient'
+import { req } from '../tests/patient'
 
 const patient = {
   ...req.body,
