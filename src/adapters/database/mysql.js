@@ -1,8 +1,11 @@
 import mysql from 'mysql'
 import { promisify } from 'util'
+import dotenv from 'dotenv'
+
+dotenv.config()
 
 const createConnection = () => {
-  return mysql.createConnection({
+  const conn = mysql.createConnection({
     host: process.env.HOST,
     user: process.env.USER,
     database: process.env.ENV === 'test' ?
@@ -10,13 +13,13 @@ const createConnection = () => {
     password: process.env.PASS,
     multipleStatements: true
   })
-}
 
-const conn = createConnection()
-
-export const connection = {
-  query: promisify(conn.query).bind(conn),
-  close () {
-    conn.destroy()
+  return {
+    query: promisify(conn.query).bind(conn),
+    close () {
+      conn.destroy()
+    }
   }
 }
+
+export const connection = createConnection()
