@@ -8,6 +8,10 @@ const patient = {
 }
 const { create } = patientRepository(connection)
 
+afterAll(() => {
+  connection.close()
+})
+
 describe('patientRepository', () => {
   test('Should insert patient in the database', async () => {
     const { insertId } = await create(patient)
