@@ -38,7 +38,7 @@ export async function signup(req, {
 
     await create({
       ...req.body,
-      password: hasher.hash(req.body.password),
+      password: hasher.hash(password),
       code
     })
 
