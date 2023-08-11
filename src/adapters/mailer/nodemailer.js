@@ -24,7 +24,7 @@ export const mailer = {
 
 const messages = {
   'activation-code': (content) => ({
-    text: `Your activation code is ${content}`,
+    text: `Seu código de activação é ${content}`,
     subject: 'Activation code'
   })
 }
