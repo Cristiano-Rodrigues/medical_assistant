@@ -7,7 +7,7 @@ export class Connection {
 }
 
 export class Hasher {
-  hash () {}
+  hash (password) { return password }
 }
 
 export const patientRepository = () => ({
