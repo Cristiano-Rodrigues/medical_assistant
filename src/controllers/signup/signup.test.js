@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker'
-import { Mailer, Connection, patientRepository } from '../../tests/stubs'
+import { Mailer, Hasher, Connection, patientRepository } from '../../tests/stubs'
 import { req } from '../../tests/patient'
 import { InvalidEntry, ServerError } from '../../errors'
 import { signup } from './signup'
@@ -60,6 +60,21 @@ describe('Signup', () => {
     }
     await signup(req, {
       mailer: new Mailer(),
+      hasher: new Hasher(),
+      connection: new Connection(),
+      patientRepository
+    })
+  })
+
+  test('Should call hasher with correct password', async () => {
+    class Hasher {
+      async hash (password) {
+        expect(password).toBe(req.body.password)
+      }
+    }
+    await signup(req, {
+      mailer: new Mailer(),
+      hasher: new Hasher(),
       connection: new Connection(),
       patientRepository
     })
@@ -73,6 +88,7 @@ describe('Signup', () => {
     })
     await signup(req, {
       mailer: new Mailer(),
+      hasher: new Hasher(),
       connection: new Connection(),
       patientRepository
     })
@@ -86,6 +102,7 @@ describe('Signup', () => {
     }
     await signup(req, {
       mailer: new Mailer(),
+      hasher: new Hasher(),
       connection: new Connection(),
       patientRepository
     })
@@ -99,6 +116,7 @@ describe('Signup', () => {
     })
     const response = await signup(req, {
       mailer: new Mailer(),
+      hasher: new Hasher(),
       connection: new Connection(),
       patientRepository
     })
@@ -111,6 +129,7 @@ describe('Signup', () => {
   test('Should return success object if no error', async () => {
     const response = await signup(req, {
       mailer: new Mailer(),
+      hasher: new Hasher(),
       connection: new Connection(),
       patientRepository
     })
