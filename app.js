@@ -37,7 +37,8 @@ function registerRoute (route) {
 
 const src = path.join(process.cwd(), '/src/routes/')
 
-Promise.all(getRouteFiles(src).map(load))
+Promise
+  .all(getRouteFiles(src).map(load))
   .then(result => result.forEach(registerRoute))
 
 export default app
