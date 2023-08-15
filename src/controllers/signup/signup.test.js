@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker'
 import { Mailer, Hasher, Connection, patientRepository } from '../../tests/stubs'
 import { req } from '../../tests/patient'
-import { InvalidEntry, ServerError } from '../../errors'
+import { DuplicatedEntry, InvalidEntry, ServerError } from '../../errors'
 import { signup } from './signup'
 
 describe('Signup', () => {
@@ -47,6 +47,24 @@ describe('Signup', () => {
     expect(response).toEqual({
       code: 400,
       error: new InvalidEntry('password')
+    })
+  })
+
+  test('Should return DuplicatedEntry error if email already exists', async () => {
+    const patientRepository = () => ({
+      getByEmail: (email) => ({ email }),
+      create: () => {}
+    })
+    const result = await signup(req, {
+      mailer: new Mailer(),
+      hasher: new Hasher(),
+      connection: new Connection(),
+      patientRepository
+    })
+    
+    expect(result).toEqual({
+      code: 400,
+      error: new DuplicatedEntry('email')
     })
   })
 
@@ -110,6 +128,7 @@ describe('Signup', () => {
 
   test('Should return server error if an unexpected error occurred', async () => {
     const patientRepository = () => ({
+      getByEmail: () => {},
       create: (patient) => {
         throw new ServerError()
       }
