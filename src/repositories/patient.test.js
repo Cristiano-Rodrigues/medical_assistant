@@ -6,17 +6,18 @@ const patient = {
   ...req.body,
   gender: Math.random() > 0.5 ? 'm' : 'f'
 }
-const { create } = patientRepository(connection)
+const { create, getByEmail } = patientRepository(connection)
 
 afterAll(() => {
   connection.close()
 })
 
 describe('patientRepository', () => {
-  test('Should insert patient in the database', async () => {
+  test('CRUD in patient repository should work', async () => {
     const { insertId } = await create(patient)
-    const [ insertPatient ] = await connection.query(`SELECT * FROM patient WHERE id = ?`, [insertId])
+    const [ insertPatient ] = await getByEmail(patient.email)
 
     expect(insertPatient).not.toBe(undefined)
+    expect(insertPatient.id).toBe(insertId)
   })
 })
