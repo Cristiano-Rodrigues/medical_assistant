@@ -1,6 +1,4 @@
-import {
-  hasNullValue, invalidEntry, serverError, success, generateRandomCode, duplicatedEntry
-} from '../helpers'
+import { serverError, success, generateRandomCode, duplicatedEntry } from '../helpers'
 
 export async function signup(req, {
   mailer,
@@ -8,25 +6,6 @@ export async function signup(req, {
   connection,
   patientRepository
 }) {
-  const requiredFields = [
-    'name', 'gender', 'born', 'email', 'password'
-  ]
-
-  if (hasNullValue(requiredFields.map(field => req.body[field]))) {
-    return invalidEntry(requiredFields.toString())
-  }
-
-  const bornDate = new Date(req.body.born)
-
-  if (bornDate.getTime() >= Date.now()) {
-    return invalidEntry('born')
-  }
-
-  const { password } = req.body
-  if (password.length < 8) {
-    return invalidEntry('password')
-  }
-
   try {
     const { create, getByEmail } = patientRepository(connection)
 
@@ -44,7 +23,7 @@ export async function signup(req, {
 
     await create({
       ...req.body,
-      password: hasher.hash(password),
+      password: hasher.hash(req.body.password),
       code
     })
 

@@ -1,47 +1,10 @@
-import { faker } from '@faker-js/faker'
 import { Mailer, Hasher, Connection, patientRepository } from '../../tests/stubs'
 import { req } from '../../tests/patient'
 import { ServerError } from '../../errors'
 import { signup } from './signup'
-import { duplicatedEntry, invalidEntry, serverError, success } from '../helpers'
+import { duplicatedEntry, serverError, success } from '../helpers'
 
 describe('Signup', () => {
-  test('Should return InvalidEntry error if a required value is not given', async () => {
-    const requiredFields = [
-      'name', 'gender', 'born', 'email', 'password'
-    ]
-    const response = await signup({
-      body: {
-        ...req.body,
-        email: null
-      }
-    }, {})
-
-    expect(response).toEqual(invalidEntry(requiredFields.toString()))
-  })
-
-  test('Should return InvalidEntry error if born is invalid', async () => {
-    const response = await signup({
-      body: {
-        ...req.body,
-        born: faker.date.future()
-      }
-    }, {})
-
-    expect(response).toEqual(invalidEntry('born'))
-  })
-
-  test('Should return InvalidEntry error if a password < 8 chararters is given', async () => {
-    const response = await signup({
-      body: {
-        ...req.body,
-        password: faker.internet.password({ length: 7 })
-      }
-    }, {})
-
-    expect(response).toEqual(invalidEntry('password'))
-  })
-
   test('Should return DuplicatedEntry error if email already exists', async () => {
     const patientRepository = () => ({
       getByEmail: (email) => ({ email }),
