@@ -15,7 +15,7 @@ afterAll(() => {
 describe('patientRepository', () => {
   test('CRUD in patient repository should work', async () => {
     const { insertId } = await create(patient)
-    const [ insertPatient ] = await getByEmail(patient.email)
+    const insertPatient = await getByEmail(patient.email)
 
     expect(insertPatient).not.toBe(undefined)
     expect(insertPatient.id).toBe(insertId)

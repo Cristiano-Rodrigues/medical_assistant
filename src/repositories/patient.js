@@ -20,7 +20,7 @@ export function patientRepository (connection) {
       query: 'SELECT * FROM patient WHERE email = ? LIMIT 1',
       values: [email]
     }
-    return await connection.query(sql.query, sql.values)
+    return (await connection.query(sql.query, sql.values))[0]
   }
 
   return {
