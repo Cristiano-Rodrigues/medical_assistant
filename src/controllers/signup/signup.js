@@ -1,6 +1,5 @@
-import { DuplicatedEntry } from '../../errors'
 import {
-  hasNullValue, invalidEntry, serverError, success, generateRandomCode
+  hasNullValue, invalidEntry, serverError, success, generateRandomCode, duplicatedEntry
 } from '../helpers'
 
 export async function signup(req, {
@@ -33,10 +32,7 @@ export async function signup(req, {
 
     const alreadyExists = await getByEmail(req.body.email)
     if (alreadyExists) {
-      return {
-        code: 400,
-        error: new DuplicatedEntry('email')
-      }
+      return duplicatedEntry('email')
     }
 
     const code = generateRandomCode({ min: 100_000, max: 1_000_000 })

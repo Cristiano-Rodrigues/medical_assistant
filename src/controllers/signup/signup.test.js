@@ -1,8 +1,9 @@
 import { faker } from '@faker-js/faker'
 import { Mailer, Hasher, Connection, patientRepository } from '../../tests/stubs'
 import { req } from '../../tests/patient'
-import { DuplicatedEntry, InvalidEntry, ServerError } from '../../errors'
+import { ServerError } from '../../errors'
 import { signup } from './signup'
+import { duplicatedEntry, invalidEntry, serverError, success } from '../helpers'
 
 describe('Signup', () => {
   test('Should return InvalidEntry error if a required value is not given', async () => {
@@ -16,10 +17,7 @@ describe('Signup', () => {
       }
     }, {})
 
-    expect(response).toEqual({
-      code: 400,
-      error: new InvalidEntry(requiredFields.toString())
-    })
+    expect(response).toEqual(invalidEntry(requiredFields.toString()))
   })
 
   test('Should return InvalidEntry error if born is invalid', async () => {
@@ -30,10 +28,7 @@ describe('Signup', () => {
       }
     }, {})
 
-    expect(response).toEqual({
-      code: 400,
-      error: new InvalidEntry('born')
-    })
+    expect(response).toEqual(invalidEntry('born'))
   })
 
   test('Should return InvalidEntry error if a password < 8 chararters is given', async () => {
@@ -44,10 +39,7 @@ describe('Signup', () => {
       }
     }, {})
 
-    expect(response).toEqual({
-      code: 400,
-      error: new InvalidEntry('password')
-    })
+    expect(response).toEqual(invalidEntry('password'))
   })
 
   test('Should return DuplicatedEntry error if email already exists', async () => {
@@ -62,10 +54,7 @@ describe('Signup', () => {
       patientRepository
     })
     
-    expect(result).toEqual({
-      code: 400,
-      error: new DuplicatedEntry('email')
-    })
+    expect(result).toEqual(duplicatedEntry('email'))
   })
 
   test('Should call mailer with correct params', async () => {
@@ -139,10 +128,8 @@ describe('Signup', () => {
       connection: new Connection(),
       patientRepository
     })
-    expect(response).toEqual({
-      code: 500,
-      error: new ServerError()
-    })
+
+    expect(response).toEqual(serverError(new ServerError()))
   })
 
   test('Should return success object if no error', async () => {
@@ -153,9 +140,6 @@ describe('Signup', () => {
       patientRepository
     })
 
-    expect(response).toEqual({
-      code: 200,
-      success: true
-    })
+    expect(response).toEqual(success())
   })
 })
