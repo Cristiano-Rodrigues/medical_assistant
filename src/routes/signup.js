@@ -1,6 +1,7 @@
 import { signup } from '../controllers'
 import { mailer, hasher, connection } from '../adapters'
 import { patientRepository } from '../repositories'
+import { validateSignUp } from './validators'
 import { wrapController } from './helpers'
 
 export default router => {
@@ -11,7 +12,11 @@ export default router => {
     patientRepository
   }
 
-  router.post('/signup', wrapController(signup, params))
+  router.post(
+    '/signup',
+    validateSignUp,
+    wrapController(signup, params)
+  )
 
   return router
 }
