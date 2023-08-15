@@ -27,10 +27,10 @@ export async function signup(req, {
       code
     })
 
-    connection.close()
-
     return success()
   } catch (error) {
     return serverError(error)
+  } finally {
+    connection.close()
   }
 }
