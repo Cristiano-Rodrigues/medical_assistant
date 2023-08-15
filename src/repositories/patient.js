@@ -6,11 +6,12 @@ export function patientRepository (connection) {
     address,
     phone,
     email,
-    password
+    password,
+    code
   }) {
     const sql = {
-      query: 'INSERT INTO patient VALUES (default, ?, ?, ?, ?, ?, ?, ?, default, default)',
-      values: [name, gender, born, address, phone, email, password]
+      query: 'INSERT INTO patient VALUES (default, ?, ?, ?, ?, ?, ?, ?, ?, default, default, default)',
+      values: [name, gender, born, address, phone, email, password, code]
     }
     return await connection.query(sql.query, sql.values)
   }
