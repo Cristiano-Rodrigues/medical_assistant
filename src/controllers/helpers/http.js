@@ -1,16 +1,27 @@
-import { InvalidEntry } from '../../errors'
+import { DuplicatedEntry, InvalidEntry } from '../../errors'
 
 export const invalidEntry = field => ({
-  code: 400,
+  code: HttpStatusCodes.BadRequest,
   error: new InvalidEntry(field)
 })
 
+export const duplicatedEntry = field => ({
+  code: HttpStatusCodes.BadRequest,
+  error: new DuplicatedEntry(field)
+})
+
 export const serverError = (error) => ({
-  code: 500,
+  code: HttpStatusCodes.ServerError,
   error
 })
 
 export const success = () => ({
-  code: 200,
+  code: HttpStatusCodes.Ok,
   success: true
 })
+
+const HttpStatusCodes = {
+  BadRequest: 400,
+  ServerError: 500,
+  Ok: 200
+}
