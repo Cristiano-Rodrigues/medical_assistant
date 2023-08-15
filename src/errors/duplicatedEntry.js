@@ -1,4 +1,4 @@
-export class DuplicatedEntry {
+export class DuplicatedEntry extends Error {
   constructor (field) {
     const message = `Duplicated Entry ${field}`
     super(message)
