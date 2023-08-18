@@ -18,7 +18,7 @@ export async function login (req, {
       return unauthorized()
     }
 
-    const equals = hasher.compare(user.password, password)
+    const equals = hasher.compare(password, user.password)
     
     if (!equals) {
       return unauthorized()
