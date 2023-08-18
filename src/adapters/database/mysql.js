@@ -9,11 +9,11 @@ const getEnvVars = () => ([
   'USER',
   'PASS',
   'DB',
-]).map(envVar => process.env[ envVar ])
+]).map(envVar => process.env[envVar])
 
 export class Connection {
   constructor () {
-    const [ host, user, password, dbname ] = getEnvVars()
+    const [host, user, password, dbname] = getEnvVars()
     const conn = mysql.createConnection({
       host,
       user,
