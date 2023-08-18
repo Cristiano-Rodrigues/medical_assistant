@@ -1,4 +1,4 @@
-import { DuplicatedEntry, InvalidEntry } from '../../errors'
+import { DuplicatedEntry, InvalidEntry, Unauthorized } from '../../errors'
 
 export const invalidEntry = field => ({
   code: HttpStatusCodes.BadRequest,
@@ -8,6 +8,11 @@ export const invalidEntry = field => ({
 export const duplicatedEntry = field => ({
   code: HttpStatusCodes.BadRequest,
   error: new DuplicatedEntry(field)
+})
+
+export const unauthorized = () => ({
+  code: HttpStatusCodes.Unauthorized,
+  error: new Unauthorized()
 })
 
 export const serverError = (error) => ({
@@ -20,8 +25,9 @@ export const success = () => ({
   success: true
 })
 
-const HttpStatusCodes = {
+export const HttpStatusCodes = {
   BadRequest: 400,
+  Unauthorized: 401,
   ServerError: 500,
   Ok: 200
 }
