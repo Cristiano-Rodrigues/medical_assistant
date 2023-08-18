@@ -1,4 +1,4 @@
-import jwt from 'jsonwebtoken'
+import _jwt from 'jsonwebtoken'
 
 const saltKey = process.env.SALT_KEY
 const options = {
@@ -7,10 +7,10 @@ const options = {
 
 export const jwt = {
   generate (payload) {
-    return jwt.sign(payload, saltKey, options)
+    return _jwt.sign(payload, saltKey, options)
   },
 
   verify (token) {
-    return jwt.verify(token, saltKey)
+    return _jwt.verify(token, saltKey)
   }
 }
