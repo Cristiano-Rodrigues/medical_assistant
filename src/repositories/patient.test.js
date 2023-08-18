@@ -1,12 +1,13 @@
 import { patientRepository } from './patient'
-import { connection } from '../adapters/database/mysql'
+import { Connection } from '../adapters'
 import { req } from '../tests/patient'
 import { generateRandomCode } from '../controllers/helpers'
 
+const connection = new Connection()
 const patient = {
   ...req.body,
   gender: Math.random() > 0.5 ? 'm' : 'f',
-  code: generateRandomCode({ min: 1, max: 10 })
+  code: generateRandomCode({ min: 100_000, max: 1_000_000 })
 }
 const { create, getByEmail } = patientRepository(connection)
 

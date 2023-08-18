@@ -1,12 +1,15 @@
 import { serverError, success, generateRandomCode, duplicatedEntry } from '../helpers'
 
 export async function signup(req, {
+  Connection,
   mailer,
   hasher,
-  connection,
   patientRepository
 }) {
+  let connection
+
   try {
+    connection = new Connection()
     const { create, getByEmail } = patientRepository(connection)
 
     const alreadyExists = await getByEmail(req.body.email)

@@ -13,7 +13,7 @@ describe('Signup', () => {
     const result = await signup(req, {
       mailer: new Mailer(),
       hasher: new Hasher(),
-      connection: new Connection(),
+      Connection,
       patientRepository
     })
     
@@ -31,7 +31,7 @@ describe('Signup', () => {
     await signup(req, {
       mailer: new Mailer(),
       hasher: new Hasher(),
-      connection: new Connection(),
+      Connection,
       patientRepository
     })
   })
@@ -45,7 +45,7 @@ describe('Signup', () => {
     await signup(req, {
       mailer: new Mailer(),
       hasher: new Hasher(),
-      connection: new Connection(),
+      Connection,
       patientRepository
     })
   })
@@ -59,7 +59,7 @@ describe('Signup', () => {
     await signup(req, {
       mailer: new Mailer(),
       hasher: new Hasher(),
-      connection: new Connection(),
+      Connection,
       patientRepository
     })
   })
@@ -73,7 +73,7 @@ describe('Signup', () => {
     await signup(req, {
       mailer: new Mailer(),
       hasher: new Hasher(),
-      connection: new Connection(),
+      Connection,
       patientRepository
     })
   })
@@ -88,7 +88,7 @@ describe('Signup', () => {
     const response = await signup(req, {
       mailer: new Mailer(),
       hasher: new Hasher(),
-      connection: new Connection(),
+      Connection,
       patientRepository
     })
 
@@ -99,7 +99,7 @@ describe('Signup', () => {
     const response = await signup(req, {
       mailer: new Mailer(),
       hasher: new Hasher(),
-      connection: new Connection(),
+      Connection,
       patientRepository
     })
 
