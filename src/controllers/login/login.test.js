@@ -1,6 +1,8 @@
 import { login } from './login'
 import { req } from '../../tests/patient'
 import { Connection, Hasher, JWT } from '../../tests/stubs'
+import { serverError, unauthorized } from '../helpers'
+import { ServerError } from '../../errors'
 
 const patientRepository = () => ({
   getByEmail: (email) => ({
@@ -22,10 +24,7 @@ describe('login', () => {
       Connection,
       patientRepository
     })
-    expect(result).toEqual({
-      code: 400,
-      error: new Error('Unauthorized')
-    })
+    expect(result).toEqual(unauthorized())
   })
 
   test('Should return error if passwords are not equal', async () => {
@@ -38,10 +37,7 @@ describe('login', () => {
       Connection,
       patientRepository
     })
-    expect(result).toEqual({
-      code: 400,
-      error: new Error('Unauthorized')
-    })
+    expect(result).toEqual(unauthorized())
   })
 
   test('Should call jwt.generate with correct params', async () => {
@@ -75,7 +71,7 @@ describe('login', () => {
   test('Should return the exception if an exception is thrown', async () => {
     class Hasher {
       compare () {
-        throw new Error('Server Error')
+        throw new ServerError()
       }
     }
     const result = await login(req, {
@@ -84,10 +80,7 @@ describe('login', () => {
       Connection,
       patientRepository
     })
-    expect(result).toEqual({
-      code: 500,
-      error: new Error('Server Error')
-    })
+    expect(result).toEqual(serverError(new ServerError()))
   })
 
   test('Should call connection.close after finish', async () => {

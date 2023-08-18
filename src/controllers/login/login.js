@@ -1,3 +1,5 @@
+import { filterUser, serverError, unauthorized } from '../helpers'
+
 export async function login (req, {
   jwt,
   hasher,
@@ -13,19 +15,13 @@ export async function login (req, {
 
     const user = await getByEmail(email)
     if (!user) {
-      return {
-        code: 400,
-        error: new Error('Unauthorized')
-      }
+      return unauthorized()
     }
 
     const equals = hasher.compare(user.password, password)
     
     if (!equals) {
-      return {
-        code: 400,
-        error: new Error('Unauthorized')
-      }
+      return unauthorized()
     }
 
     const payload = {
@@ -43,25 +39,8 @@ export async function login (req, {
       user: filterUser(user)
     }
   } catch (error) {
-    return {
-      code: 500,
-      error
-    }
+    return serverError(error)
   } finally {
     connection.close()
   }
-}
-
-function filterUser (user) {
-  let output = {}
-  const filterFields = [
-    'password',
-    'created_at',
-    'updated_at'
-  ]
-  Object.keys(user).filter(field => (
-    !filterFields.includes(field)
-  )).forEach(field => output[field] = user[field])
-
-  return output
 }
