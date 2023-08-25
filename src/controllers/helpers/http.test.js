@@ -5,7 +5,8 @@ describe('http.js', () => {
   test('invalidEntry should return correct http response', () => {
     expect(invalidEntry('any_field')).toEqual({
       code: HttpStatusCodes.BadRequest,
-      error: new InvalidEntry('any_field')
+      error: new InvalidEntry('any_field'),
+      location: 'any_field'
     })
   })
 
@@ -19,7 +20,8 @@ describe('http.js', () => {
   test('duplicatedEntry should return correct http response', () => {
     expect(duplicatedEntry('field')).toEqual({
       code: HttpStatusCodes.BadRequest,
-      error: new DuplicatedEntry('field')
+      error: new DuplicatedEntry('field'),
+      location: 'field'
     })
   })
 

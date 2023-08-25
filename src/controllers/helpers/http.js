@@ -2,12 +2,14 @@ import { DuplicatedEntry, InvalidEntry, Unauthorized } from '../../errors'
 
 export const invalidEntry = field => ({
   code: HttpStatusCodes.BadRequest,
-  error: new InvalidEntry(field)
+  error: new InvalidEntry(field),
+  location: field
 })
 
 export const duplicatedEntry = field => ({
   code: HttpStatusCodes.BadRequest,
-  error: new DuplicatedEntry(field)
+  error: new DuplicatedEntry(field),
+  location: field
 })
 
 export const unauthorized = () => ({
