@@ -17,7 +17,8 @@ export const validate = validations => {
 
     res.status(400).send({
       code: 400,
-      error: new InvalidEntry(field)
+      error: new InvalidEntry(field),
+      location: field
     })
   }
 }
