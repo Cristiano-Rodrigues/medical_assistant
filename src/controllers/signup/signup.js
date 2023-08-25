@@ -18,11 +18,6 @@ export async function signup(req, {
     }
 
     const code = generateRandomCode({ min: 100_000, max: 1_000_000 })
-    await mailer.send({
-      type: 'activation-code',
-      to: req.body.email,
-      content: code
-    })
 
     await create({
       ...req.body,
