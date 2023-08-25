@@ -1,6 +1,6 @@
 import { serverError, success, generateRandomCode, duplicatedEntry } from '../helpers'
 
-export async function signup(req, {
+export async function signup (req, {
   Connection,
   mailer,
   hasher,
