@@ -1,8 +1,6 @@
 export class DuplicatedEntry extends Error {
   constructor (field) {
-    const message = `Duplicated Entry ${field}`
-    super(message)
-    this.message = message
+    super(`Duplicated Entry ${field}`)
     this.name = 'DuplicatedEntry'
   }
 }

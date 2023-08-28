@@ -1,8 +1,6 @@
 export class InvalidEntry extends Error {
   constructor (field) {
-    const message = `Invalid Entry ${field}`
-    super(message)
-    this.message = message
+    super(`Invalid Entry ${field}`)
     this.name = 'InvalidEntry'
   }
 }
