@@ -1,7 +1,5 @@
-import { Mailer, Hasher, Connection, patientRepository } from '../../tests/stubs'
-import { req } from '../../tests/patient'
+import { req, makeSut } from '../../stubs/signup'
 import { ServerError } from '../../errors'
-import { signup } from './signup'
 import { duplicatedEntry, serverError, success } from '../helpers'
 
 describe('Signup', () => {
@@ -10,12 +8,8 @@ describe('Signup', () => {
       getByEmail: (email) => ({ email }),
       create: () => {}
     })
-    const result = await signup(req, {
-      mailer: new Mailer(),
-      hasher: new Hasher(),
-      Connection,
-      patientRepository
-    })
+    const sut = makeSut({ patientRepository })
+    const result = await sut()
     
     expect(result).toEqual(duplicatedEntry('email'))
   })
@@ -28,12 +22,8 @@ describe('Signup', () => {
         expect(to).toBe(req.body.email)
       }
     }
-    await signup(req, {
-      mailer: new Mailer(),
-      hasher: new Hasher(),
-      Connection,
-      patientRepository
-    })
+    const sut = makeSut({ Mailer })
+    await sut()
   })
 
   test('Should call hasher with correct password', async () => {
@@ -42,12 +32,8 @@ describe('Signup', () => {
         expect(password).toBe(req.body.password)
       }
     }
-    await signup(req, {
-      mailer: new Mailer(),
-      hasher: new Hasher(),
-      Connection,
-      patientRepository
-    })
+    const sut = makeSut({ Hasher })
+    await sut()
   })
 
   test('Should call [repository].create function with generated code', async () => {
@@ -56,12 +42,8 @@ describe('Signup', () => {
         expect(typeof patient.code).toBe('number')
       }
     })
-    await signup(req, {
-      mailer: new Mailer(),
-      hasher: new Hasher(),
-      Connection,
-      patientRepository
-    })
+    const sut = makeSut({ patientRepository })
+    await sut()
   })
 
   test('Should call connection.close function to after using repository', async () => {
@@ -70,38 +52,26 @@ describe('Signup', () => {
         expect(1).toBe(1)
       }
     }
-    await signup(req, {
-      mailer: new Mailer(),
-      hasher: new Hasher(),
-      Connection,
-      patientRepository
-    })
+    const sut = makeSut({ Connection })
+    await sut()
   })
 
   test('Should return server error if an unexpected error occurred', async () => {
     const patientRepository = () => ({
       getByEmail: () => {},
-      create: (patient) => {
+      create: () => {
         throw new ServerError()
       }
     })
-    const response = await signup(req, {
-      mailer: new Mailer(),
-      hasher: new Hasher(),
-      Connection,
-      patientRepository
-    })
+    const sut = makeSut({ patientRepository })
+    const response = await sut()
 
     expect(response).toEqual(serverError(new ServerError()))
   })
 
   test('Should return success object if no error', async () => {
-    const response = await signup(req, {
-      mailer: new Mailer(),
-      hasher: new Hasher(),
-      Connection,
-      patientRepository
-    })
+    const sut = makeSut()
+    const response = await sut()
 
     expect(response).toEqual(success())
   })

@@ -1,29 +1,15 @@
-import { login } from './login'
-import { req } from '../../tests/patient'
-import { Connection, Hasher, JWT } from '../../tests/stubs'
+import { req, makeSut } from '../../stubs/login'
 import { serverError, unauthorized } from '../helpers'
 import { ServerError } from '../../errors'
-
-const patientRepository = () => ({
-  getByEmail: (email) => ({
-    id: 1,
-    email,
-    password: req.body.password,
-    status: 0
-  })
-})
 
 describe('login', () => {
   test('Should return error if user email doesn\'t exist', async () => {
     const patientRepository = () => ({
       getByEmail: () => {}
     })
-    const result = await login(req, {
-      jwt: new JWT(),
-      hasher: new Hasher(),
-      Connection,
-      patientRepository
-    })
+    const sut = makeSut({ patientRepository })
+    const result = await sut()
+    
     expect(result).toEqual(unauthorized())
   })
 
@@ -31,12 +17,9 @@ describe('login', () => {
     class Hasher {
       compare () { return false }
     }
-    const result = await login(req, {
-      jwt: new JWT(),
-      hasher: new Hasher(),
-      Connection,
-      patientRepository
-    })
+    const sut = makeSut({ Hasher })
+    const result = await sut()
+
     expect(result).toEqual(unauthorized())
   })
 
@@ -50,21 +33,14 @@ describe('login', () => {
         })
       }
     }
-    await login(req, {
-      jwt: new JWT(),
-      hasher: new Hasher(),
-      Connection,
-      patientRepository
-    })
+    const sut = makeSut({ JWT })
+    await sut()
   })
 
   test('Should not return user password in the result if success', async () => {
-    const result = await login(req, {
-      jwt: new JWT(),
-      hasher: new Hasher(),
-      Connection,
-      patientRepository
-    })
+    const sut = makeSut()
+    const result = await sut()
+
     expect(result.user.password).toBe(undefined)
   })
 
@@ -74,12 +50,9 @@ describe('login', () => {
         throw new ServerError()
       }
     }
-    const result = await login(req, {
-      jwt: new JWT(),
-      hasher: new Hasher(),
-      Connection,
-      patientRepository
-    })
+    const sut = makeSut({ Hasher })
+    const result = await sut()
+
     expect(result).toEqual(serverError(new ServerError()))
   })
 
@@ -89,30 +62,23 @@ describe('login', () => {
         expect(1).toBe(1)
       }
     }
-    await login(req, {
-      jwt: new JWT(),
-      hasher: new Hasher(),
-      Connection,
-      patientRepository
-    })
+    const sut = makeSut({ Connection })
+    await sut()
   })
 
   test('Should return success object if no error', async () => {
     class JWT {
       generate () {
-        return 'token_string'
+        return 'token'
       }
     }
-    const result = await login(req, {
-      jwt: new JWT(),
-      hasher: new Hasher(),
-      Connection,
-      patientRepository
-    })
+    const sut = makeSut({ JWT })
+    const result = await sut()
+
     expect(result).toEqual({
       code: 200,
       success: true,
-      token: 'token_string',
+      token: 'token',
       user: {
         id: 1,
         email: req.body.email,
