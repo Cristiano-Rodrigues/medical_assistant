@@ -1,6 +1,5 @@
 import { getToken } from './getToken'
 
-
 describe('getToken', () => {
   test('Should return null if an invalid argument is given', () => {
     expect(getToken()).toBe(null)
