@@ -1,37 +1,16 @@
 import { ServerError } from '../../errors'
 import { invalidEntry, serverError, success } from '../helpers'
-import { registerGlycemia } from './registerGlycemia'
-
-class Connection {
-  close () {}
-}
-
-const patientRepository = () => ({
-  getById: async () => ({})
-})
-
-const glycemiaRepository = () => ({
-  register: async () => ({})
-})
-
-const req = {
-  body: {
-    level: 1,
-    patientId: 1,
-    observation: 'any_observation'
-  }
-}
+import { makeSut } from '../../stubs/registerGlycemia'
 
 describe('registerGlycemia', () => {
   test('Should return error if patientId doesn\'t exist', async () => {
     const patientRepository = () => ({
       getById: async () => null
     })
-    const result = await registerGlycemia(req, {
-      Connection,
-      patientRepository,
-      glycemiaRepository
-    })
+
+    const sut = makeSut({ patientRepository })
+    const result = await sut()
+
     expect(result).toEqual(invalidEntry('patientId'))
   })
 
@@ -39,20 +18,17 @@ describe('registerGlycemia', () => {
     const patientRepository = () => ({
       getById: async () => { throw new ServerError() }
     })
-    const result = await registerGlycemia(req, {
-      Connection,
-      patientRepository,
-      glycemiaRepository
-    })
+
+    const sut = makeSut({ patientRepository })
+    const result = await sut()
+
     expect(result).toEqual(serverError(new ServerError()))
   })
 
   test('Should return success object if no error', async () => {
-    const result = await registerGlycemia(req, {
-      Connection,
-      patientRepository,
-      glycemiaRepository
-    })
+    const sut = makeSut()
+    const result = await sut()
+
     expect(result).toEqual(success())
   })
 })
