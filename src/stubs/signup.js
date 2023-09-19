@@ -26,8 +26,8 @@ class DefaultConn {
 }
 
 const defaultPatientRepository = () => ({
-  create: () => {},
-  getByEmail: () => {}
+  create: async () => {},
+  getByEmail: async () => {}
 })
 
 export const makeSut = ({

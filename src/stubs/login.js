@@ -21,7 +21,7 @@ class DefaultJWT {
 }
 
 const defaultPatientRepository = () => ({
-  getByEmail: (email) => ({
+  getByEmail: async (email) => ({
     id: 1,
     email,
     password: req.body.password,
