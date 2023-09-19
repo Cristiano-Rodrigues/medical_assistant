@@ -1,4 +1,4 @@
-export function patientRepository (connection) {
+export function glycemiaRepository (connection) {
   async function register ({
     level,
     patientId,
