@@ -1,8 +1,9 @@
 import { registerGlycemia } from '../controllers'
-import { Connection } from '../adapters'
+import { auth } from '../middlewares'
 import { patientRepository, glycemiaRepository } from '../repositories'
+import { Connection, jwt } from '../adapters'
 import { validateRegisterGlycemia } from './validators'
-import { wrapController } from './helpers'
+import { wrapController, wrapMiddleware } from './helpers'
 
 export default router => {
   const params = {
@@ -10,10 +11,12 @@ export default router => {
     patientRepository,
     glycemiaRepository
   }
+  const authMiddleware = wrapMiddleware(auth, { jwt })
 
   router.post(
     '/glycemia',
     validateRegisterGlycemia,
+    authMiddleware,
     wrapController(registerGlycemia, params)
   )
 
