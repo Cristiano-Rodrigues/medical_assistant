@@ -12,7 +12,7 @@ export default router => {
   }
 
   router.post(
-    'glycemia',
+    '/glycemia',
     validateRegisterGlycemia,
     wrapController(registerGlycemia, params)
   )
