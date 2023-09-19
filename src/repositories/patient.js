@@ -24,8 +24,17 @@ export function patientRepository (connection) {
     return (await connection.query(sql.query, sql.values))[0]
   }
 
+  async function getById (id) {
+    const sql = {
+      query: 'SELECT * FROM patient WHERE id = ? LIMIT 1',
+      values: [id]
+    }
+    return (await connection.query(sql.query, sql.values))[0]
+  }
+
   return {
     create,
-    getByEmail
+    getByEmail,
+    getById
   }
 }
