@@ -1,5 +1,5 @@
 import { body } from 'express-validator'
-import { validate } from '../../adapters'
+import { validate } from '../../../adapters'
 
 export const validateSignUp = validate([
   body('name').isString().notEmpty(),

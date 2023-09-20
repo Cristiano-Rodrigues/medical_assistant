@@ -1,3 +1,3 @@
-export * from './signup'
-export * from './login'
-export * from './registerGlycemia'
+export * from './signup/signup'
+export * from './login/login'
+export * from './glycemia'
