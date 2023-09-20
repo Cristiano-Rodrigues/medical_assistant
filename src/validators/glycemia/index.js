@@ -1,1 +1,1 @@
-export * from './registerGlycemia'
+export * from './register'
