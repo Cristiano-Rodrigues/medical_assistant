@@ -1,8 +1,7 @@
 import { signup } from '../controllers'
-import { Connection, mailer, hasher } from '../adapters'
+import { wrapController, Connection, mailer, hasher } from '../adapters'
 import { patientRepository } from '../repositories'
 import { validateSignUp } from './validators'
-import { wrapController } from './helpers'
 
 export default router => {
   const params = {
