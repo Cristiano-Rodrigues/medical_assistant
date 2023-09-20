@@ -1,5 +1,5 @@
-import { ok } from '../controllers'
-import { wrapController } from '../adapters'
+import { ok } from '../../controllers'
+import { wrapController } from '../../adapters'
 
 export default router => {
 

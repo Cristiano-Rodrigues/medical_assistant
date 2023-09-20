@@ -1,7 +1,7 @@
 import express from 'express'
 import dotenv from 'dotenv'
 import fs from 'fs'
-import path from 'path'
+import { join, relative } from 'path'
 
 dotenv.config()
 
@@ -18,14 +18,27 @@ app.use((_, res, next) => {
 })
 
 function getRouteFiles (src) {
-  return fs.readdirSync(src).filter(file => (
-    fs.statSync(`${src}${file}`).isFile()
-  ))
+  const find = (originPath, state) => {
+    const files = fs.readdirSync(originPath)
+    for (const file of files) {
+      const currentPath = join(originPath, file)
+      const isFile = fs.statSync(currentPath).isFile()
+      if (isFile) {
+        const relativePath = './' + relative('.', currentPath)
+        state.push(relativePath)
+      } else {
+        find(currentPath, state)
+      }
+    }
+    return state
+  }
+
+  return find(src, [])
 }
 
-async function load (filename) {
-  const src = './src/routes/' + filename
-  const exported = (await import(src)).default
+
+async function load (path) {
+  const exported = (await import(path)).default
   const router = express.Router()
   
   return exported(router)
@@ -35,7 +48,7 @@ function registerRoute (route) {
   app.use('/api/v1', route)
 }
 
-const src = path.join(process.cwd(), '/src/routes/')
+const src = join(process.cwd(), '/src/routes/')
 
 Promise
   .all(getRouteFiles(src).map(load))
