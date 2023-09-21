@@ -24,6 +24,12 @@ export async function signup (req, {
       password: hasher.hash(req.body.password),
       code
     })
+    
+    await mailer.send({
+      to: req.body.email,
+      subject: 'Activation code',
+      text: `Your activation code is ${code}`
+    })
 
     return success()
   } catch (error) {

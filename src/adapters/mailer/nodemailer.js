@@ -1,9 +1,7 @@
 import nodemailer from 'nodemailer'
 
 const transporter = nodemailer.createTransport({
-  host: process.env.MAIL_HOST,
-  port: 465,
-  secure: true,
+  service: process.env.MAIL_HOST,
   auth: {
     user: process.env.MAIL_USER,
     pass: process.env.MAIL_PASS
@@ -11,8 +9,7 @@ const transporter = nodemailer.createTransport({
 })
 
 export const mailer = {
-  async send ({ type, to, content }) {
-    const { text, subject } = messages[type](content)
+  async send ({ to, subject, text }) {
     await transporter.sendMail({
       from: process.env.MAIL_USER,
       to,
@@ -20,11 +17,4 @@ export const mailer = {
       text
     })
   }
-}
-
-const messages = {
-  'activation-code': (content) => ({
-    text: `Seu código de activação é ${content}`,
-    subject: 'Activation code'
-  })
 }
