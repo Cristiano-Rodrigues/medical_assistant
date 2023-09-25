@@ -9,7 +9,7 @@ const glycemiaRepository = (conn) => ({
   getById: async () => ({})
 })
 const req = {
-  body: {
+  params: {
     id: 1
   }
 }

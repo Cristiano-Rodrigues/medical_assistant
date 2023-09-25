@@ -4,7 +4,7 @@ export async function getGlycemiaById (req, {
   Connection,
   glycemiaRepository
 }) {
-  const id = req.body.id
+  const id = req.params.id
   let connection
 
   try {
