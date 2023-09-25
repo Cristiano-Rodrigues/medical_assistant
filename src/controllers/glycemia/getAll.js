@@ -10,7 +10,8 @@ export async function getAllGlycemia (req, {
     connection = new Connection()
     const { getAll } = glycemiaRepository(connection)
 
-    const result = await getAll()
+    const { id: patientId } = req.user
+    const result = await getAll(patientId)
 
     return success({ result })
   } catch (error) {

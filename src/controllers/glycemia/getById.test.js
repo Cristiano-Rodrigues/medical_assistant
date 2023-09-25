@@ -11,6 +11,9 @@ const glycemiaRepository = (conn) => ({
 const req = {
   params: {
     id: 1
+  },
+  user: {
+    id: 1
   }
 }
 

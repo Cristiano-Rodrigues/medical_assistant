@@ -8,6 +8,11 @@ class Connection {
 const glycemiaRepository = (conn) => ({
   getAll: async () => ([{}])
 })
+const req = {
+  user: {
+    id: 1
+  }
+}
 
 describe('getAllGlycemia', () => {
   test('Should return server error if something goes wrong', async () => {
@@ -16,7 +21,7 @@ describe('getAllGlycemia', () => {
         throw new ServerError()
       }
     })
-    const result = await getAllGlycemia({}, {
+    const result = await getAllGlycemia(req, {
       Connection,
       glycemiaRepository
     })
@@ -24,7 +29,7 @@ describe('getAllGlycemia', () => {
   })
 
   test('Should return result if no errors', async () => {
-    const result = await getAllGlycemia({}, {
+    const result = await getAllGlycemia(req, {
       Connection,
       glycemiaRepository
     })
