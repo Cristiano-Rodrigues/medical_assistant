@@ -12,18 +12,25 @@ export function glycemiaRepository (connection) {
     return await connection.query(sql.query, sql.values)
   }
 
-  async function getAll () {
+  async function getAll (patientId) {
     const sql = {
-      query: 'SELECT * FROM glycemia LIMIT 1000',
-      values: []
+      query: 'SELECT g.* FROM glycemia AS g JOIN patient AS' +
+        ' p ON g.patient_id = p.id WHERE p.id = ? LIMIT 1000',
+      values: [patientId]
     }
     return await connection.query(sql.query, sql.values)
   }
 
-  async function getById (id) {
+  async function getById ({
+    patientId,
+    glycemiaId
+  }) {
+    console.log(patientId, glycemiaId)
     const sql = {
-      query: 'SELECT * FROM glycemia WHERE id = ? LIMIT 1',
-      values: [id]
+      query: 'SELECT g.* FROM glycemia AS g JOIN patient AS' +
+        ' p ON g.patient_id = p.id WHERE p.id = ? AND g.id = ? ' +
+        'LIMIT 1000',
+      values: [patientId, glycemiaId]
     }
     return (await connection.query(sql.query, sql.values))[0]
   }
