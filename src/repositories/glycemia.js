@@ -12,7 +12,16 @@ export function glycemiaRepository (connection) {
     return await connection.query(sql.query, sql.values)
   }
 
+  async function getAll () {
+    const sql = {
+      query: 'SELECT * FROM glycemia LIMIT 1000',
+      values: []
+    }
+    return await connection.query(sql.query, sql.values)
+  }
+
   return {
-    register
+    register,
+    getAll
   }
 }
