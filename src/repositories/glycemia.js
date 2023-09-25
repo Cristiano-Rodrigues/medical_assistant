@@ -20,8 +20,17 @@ export function glycemiaRepository (connection) {
     return await connection.query(sql.query, sql.values)
   }
 
+  async function getById (id) {
+    const sql = {
+      query: 'SELECT * FROM glycemia WHERE id = ? LIMIT 1',
+      values: [id]
+    }
+    return (await connection.query(sql.query, sql.values))[0]
+  }
+
   return {
     register,
-    getAll
+    getAll,
+    getById
   }
 }
