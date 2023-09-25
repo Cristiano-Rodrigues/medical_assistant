@@ -22,9 +22,10 @@ export const serverError = (error) => ({
   error
 })
 
-export const success = () => ({
+export const success = (additionalData = {}) => ({
   code: HttpStatusCodes.Ok,
-  success: true
+  success: true,
+  ...additionalData
 })
 
 export const HttpStatusCodes = {
