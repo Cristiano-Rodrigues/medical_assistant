@@ -1,4 +1,4 @@
-import { DuplicatedEntry, InvalidEntry, ServerError, Unauthorized } from '../../errors'
+import { DuplicatedEntry, InvalidEntry, ServerError, Unauthorized } from '../errors'
 import { HttpStatusCodes, duplicatedEntry, invalidEntry, serverError, success, unauthorized } from './http'
 
 describe('http.js', () => {

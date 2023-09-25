@@ -1,4 +1,4 @@
-import { filterUser, serverError, unauthorized } from '../helpers'
+import { filterUser, serverError, unauthorized } from '../../helpers'
 
 export async function login (req, {
   jwt,

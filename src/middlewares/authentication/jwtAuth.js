@@ -1,4 +1,4 @@
-import { getToken, unauthorized, success } from '../helpers'
+import { getToken, unauthorized, success } from '../../helpers'
 
 export function auth (req, { jwt }) {
   try {

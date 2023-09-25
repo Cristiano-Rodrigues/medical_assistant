@@ -1,4 +1,4 @@
-import { success } from '../helpers'
+import { success } from '../../helpers'
 import { ok } from './ok'
 
 describe('ok', () => {

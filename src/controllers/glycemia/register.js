@@ -1,4 +1,4 @@
-import { invalidEntry, serverError, success } from '../helpers'
+import { invalidEntry, serverError, success } from '../../helpers'
 
 export async function registerGlycemia (req, {
   Connection,

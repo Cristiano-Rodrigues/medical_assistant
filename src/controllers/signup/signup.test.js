@@ -1,6 +1,6 @@
 import { req, makeSut } from '../../stubs/signup'
 import { ServerError } from '../../errors'
-import { duplicatedEntry, serverError, success } from '../helpers'
+import { duplicatedEntry, serverError, success } from '../../helpers'
 
 describe('Signup', () => {
   test('Should return DuplicatedEntry error if email already exists', async () => {

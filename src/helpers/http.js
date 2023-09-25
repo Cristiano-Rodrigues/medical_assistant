@@ -1,4 +1,4 @@
-import { DuplicatedEntry, InvalidEntry, Unauthorized } from '../../errors'
+import { DuplicatedEntry, InvalidEntry, Unauthorized } from '../errors'
 
 export const invalidEntry = field => ({
   code: HttpStatusCodes.BadRequest,

@@ -1,5 +1,5 @@
 import { Unauthorized } from '../../errors'
-import { success, unauthorized } from '../helpers'
+import { success, unauthorized } from '../../helpers'
 import { auth } from './jwtAuth'
 
 

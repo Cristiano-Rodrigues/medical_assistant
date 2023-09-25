@@ -1,4 +1,4 @@
-import { serverError, success, generateRandomCode, duplicatedEntry } from '../helpers'
+import { serverError, success, generateRandomCode, duplicatedEntry } from '../../helpers'
 
 export async function signup (req, {
   Connection,
