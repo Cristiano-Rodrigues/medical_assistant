@@ -9,7 +9,9 @@ const req = {
   }
 }
 const jwt = {
-  verify () { return {} }
+  verify: (token) => ({
+    token
+  })
 }
 
 describe('auth', () => {
@@ -40,6 +42,14 @@ describe('auth', () => {
     const response = auth(req, { jwt })
 
     expect(response).toEqual(unauthorized())
+  })
+
+  test('Should put user data into req object if payload is decoded', () => {
+    auth(req, { jwt })
+
+    expect(req.user).toEqual({
+      token: 'a_valid_token'
+    })
   })
 
   test('Should return success if user authenticates successfuly', () => {

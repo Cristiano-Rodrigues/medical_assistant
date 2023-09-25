@@ -13,6 +13,8 @@ export function auth (req, { jwt }) {
     if (!payload) {
       return unauthorized()
     }
+
+    req.user = payload
   } catch (error) {
     return unauthorized()
   }
