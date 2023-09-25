@@ -7,7 +7,6 @@ export async function registerGlycemia (req, {
 }) {
   const {
     level,
-    patientId,
     observation
   } = req.body
 
@@ -17,6 +16,7 @@ export async function registerGlycemia (req, {
     connection = new Connection()
     const { getById } = patientRepository(connection)
 
+    const { id: patientId } = req.user
     const patient = await getById(patientId)
     if (!patient) {
       return invalidEntry('patientId')

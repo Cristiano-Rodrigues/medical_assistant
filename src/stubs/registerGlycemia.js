@@ -16,8 +16,10 @@ const defaultGlycemiaRepository = () => ({
 const req = {
   body: {
     level: faker.number.int(),
-    patientId: faker.number.int(),
     observation: faker.lorem.words()
+  },
+  user: {
+    id: faker.number.int()
   }
 }
 
