@@ -1,4 +1,4 @@
-import { getAllGlycemia } from '../../controllers/glycemia/getAll'
+import { getAllGlycemia } from '../../controllers'
 import { auth } from '../../middlewares'
 import { glycemiaRepository } from '../../repositories'
 import { wrapController, wrapMiddleware, Connection, jwt } from '../../adapters'
