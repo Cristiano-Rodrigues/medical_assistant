@@ -1,6 +1,6 @@
 import { ServerError } from '../../errors'
 import { serverError, success } from '../helpers'
-import { getAll } from './getAll'
+import { getAllGlycemia } from './getAll'
 
 class Connection {
   close () {}
@@ -9,14 +9,14 @@ const glycemiaRepository = (conn) => ({
   getAll: async () => ([{}])
 })
 
-describe('getAll', () => {
+describe('getAllGlycemia', () => {
   test('Should return server error if something goes wrong', async () => {
     const glycemiaRepository = (conn) => ({
       getAll: async () => {
         throw new ServerError()
       }
     })
-    const result = await getAll({}, {
+    const result = await getAllGlycemia({}, {
       Connection,
       glycemiaRepository
     })
@@ -24,7 +24,7 @@ describe('getAll', () => {
   })
 
   test('Should return result if no errors', async () => {
-    const result = await getAll({}, {
+    const result = await getAllGlycemia({}, {
       Connection,
       glycemiaRepository
     })
