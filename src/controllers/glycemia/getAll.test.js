@@ -1,18 +1,6 @@
 import { ServerError } from '../../errors'
 import { serverError, success } from '../../helpers'
-import { getAllGlycemia } from './getAll'
-
-class Connection {
-  close () {}
-}
-const glycemiaRepository = (conn) => ({
-  getAll: async () => ([{}])
-})
-const req = {
-  user: {
-    id: 1
-  }
-}
+import { makeSut } from '../../stubs/glycemia/getAll'
 
 describe('getAllGlycemia', () => {
   test('Should return server error if something goes wrong', async () => {
@@ -21,18 +9,16 @@ describe('getAllGlycemia', () => {
         throw new ServerError()
       }
     })
-    const result = await getAllGlycemia(req, {
-      Connection,
-      glycemiaRepository
-    })
+    const sut = makeSut({ glycemiaRepository })
+    const result = await sut()
+
     expect(result).toEqual(serverError(new ServerError()))
   })
 
   test('Should return result if no errors', async () => {
-    const result = await getAllGlycemia(req, {
-      Connection,
-      glycemiaRepository
-    })
+    const sut = makeSut()
+    const result = await sut()
+    
     expect(result).toEqual(success({
       result: [{}]
     }))
