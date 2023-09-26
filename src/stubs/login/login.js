@@ -1,44 +1,43 @@
 import { faker } from '@faker-js/faker'
-import { signup } from '../controllers'
+import { login } from '../../controllers'
 
 export const req = {
   body: {
-    name: faker.person.fullName(),
-    gender: faker.person.sexType(),
-    born: faker.date.birthdate(),
-    address: faker.location.city(),
-    phone: faker.phone.number(),
     email: faker.internet.email(),
     password: faker.internet.password()
   }
-}
-
-class DefaulMailer {
-  async send () {}
-}
-
-class DefaultHasher {
-  hash (password) { return password }
 }
 
 class DefaultConn {
   close () {}
 }
 
+class DefaultHasher {
+  compare () { return true }
+}
+
+class DefaultJWT {
+  generate (payload) { return payload }
+}
+
 const defaultPatientRepository = () => ({
-  create: async () => {},
-  getByEmail: async () => {}
+  getByEmail: async (email) => ({
+    id: 1,
+    email,
+    password: req.body.password,
+    status: 0
+  })
 })
 
 export const makeSut = ({
-  Mailer = DefaulMailer,
+  JWT = DefaultJWT,
   Hasher = DefaultHasher,
   Connection = DefaultConn,
   patientRepository = defaultPatientRepository
 } = {}) => (
   async () => (
-    await signup(req, {
-      mailer: new Mailer(),
+    await login(req, {
+      jwt: new JWT(),
       hasher: new Hasher(),
       Connection,
       patientRepository

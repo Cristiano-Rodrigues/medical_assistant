@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker'
-import { registerGlycemia } from '../controllers'
+import { registerGlycemia } from '../../controllers'
 
 class DefaultConn {
   close () {}

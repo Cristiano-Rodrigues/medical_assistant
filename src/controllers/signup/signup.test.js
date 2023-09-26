@@ -1,4 +1,4 @@
-import { req, makeSut } from '../../stubs/signup'
+import { req, makeSut } from '../../stubs/signup/signup'
 import { ServerError } from '../../errors'
 import { duplicatedEntry, serverError, success } from '../../helpers'
 

@@ -1,6 +1,6 @@
 import { ServerError } from '../../errors'
 import { invalidEntry, serverError, success } from '../../helpers'
-import { makeSut } from '../../stubs/registerGlycemia'
+import { makeSut } from '../../stubs/glycemia/register'
 
 describe('registerGlycemia', () => {
   test('Should return error if patientId doesn\'t exist', async () => {
