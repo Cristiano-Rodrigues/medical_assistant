@@ -5,10 +5,6 @@ class DefaultConn {
   close () {}
 }
 
-const defaultPatientRepository = () => ({
-  getById: async () => ({})
-})
-
 const defaultGlycemiaRepository = () => ({
   register: async () => ({})
 })
@@ -25,13 +21,11 @@ const req = {
 
 export const makeSut = ({
   Connection = DefaultConn,
-  patientRepository = defaultPatientRepository,
   glycemiaRepository = defaultGlycemiaRepository
 } = {}) => (
   async () => (
     await registerGlycemia(req, {
       Connection,
-      patientRepository,
       glycemiaRepository
     })
   )
