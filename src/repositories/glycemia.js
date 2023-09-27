@@ -29,7 +29,7 @@ export function glycemiaRepository (connection) {
     const sql = {
       query: 'SELECT g.* FROM glycemia AS g JOIN patient AS' +
         ' p ON g.patient_id = p.id WHERE p.id = ? AND g.id = ? ' +
-        'LIMIT 1000',
+        'LIMIT 1',
       values: [patientId, glycemiaId]
     }
     return (await connection.query(sql.query, sql.values))[0]
