@@ -22,8 +22,18 @@ export function weightRepository (connection) {
     return await connection.query(sql.query, sql.values)
   }
 
+  async function getById ({ weightId, patientId }) {
+    const sql = {
+      query: 'SELECT w.* FROM weight AS w JOIN patient AS p ON ' +
+        'w.patient_id = p.id WHERE p.id = ? AND w.id = ? LIMIT 1',
+      values: [patientId, weightId]
+    }
+    return (await connection.query(sql.query, sql.values))[0]
+  }
+
   return {
     register,
-    getAll
+    getAll,
+    getById
   }
 }
