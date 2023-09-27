@@ -14,8 +14,8 @@ export default router => {
 
   router.post(
     '/glycemia',
-    validateRegisterGlycemia,
     authMiddleware,
+    validateRegisterGlycemia,
     wrapController(registerGlycemia, params)
   )
 

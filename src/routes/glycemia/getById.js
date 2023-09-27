@@ -13,8 +13,8 @@ export default router => {
 
   router.get(
     '/glycemia/:id',
-    validateGetGlycemiaById,
     authMiddleware,
+    validateGetGlycemiaById,
     wrapController(getGlycemiaById, params)
   )
 
