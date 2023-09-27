@@ -7,7 +7,7 @@ export function weightRepository (connection) {
     patientId
   }) {
     const sql = {
-      query: 'INSERT INTO weight VALUES (default, ?, ?, ?, ?, ?)',
+      query: 'INSERT INTO weight VALUES (default, ?, ?, ?, ?, ?, default, default)',
       values:  [weight, height, date, observation, patientId] 
     }
     return await connection.query(sql.query, sql.values)
