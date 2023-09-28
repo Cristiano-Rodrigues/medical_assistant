@@ -22,8 +22,22 @@ export function exerciseRepository (connection) {
     return await connection.query(sql.query, sql.values)
   }
 
+  async function getById ({
+    patientId,
+    exerciseId
+  }) {
+    const sql = {
+      query: 'SELECT e.* FROM exercise AS e JOIN patient AS' +
+        ' p ON e.patient_id = p.id WHERE p.id = ? AND e.id = ? ' +
+        'LIMIT 1',
+      values: [patientId, exerciseId]
+    }
+    return (await connection.query(sql.query, sql.values))[0]
+  }
+
   return {
     register,
-    getAll
+    getAll,
+    getById
   }
 }
