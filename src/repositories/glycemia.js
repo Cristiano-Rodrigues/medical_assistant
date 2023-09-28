@@ -25,7 +25,6 @@ export function glycemiaRepository (connection) {
     patientId,
     glycemiaId
   }) {
-    console.log(patientId, glycemiaId)
     const sql = {
       query: 'SELECT g.* FROM glycemia AS g JOIN patient AS' +
         ' p ON g.patient_id = p.id WHERE p.id = ? AND g.id = ? ' +

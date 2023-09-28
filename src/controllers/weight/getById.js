@@ -19,7 +19,6 @@ export async function getWeightById (req, {
 
     return success({ result })
   } catch (error) {
-    console.log(error)
     return serverError(error)
   } finally {
     connection.close()
