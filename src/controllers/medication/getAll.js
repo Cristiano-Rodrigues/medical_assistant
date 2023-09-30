@@ -1,6 +1,6 @@
 import { serverError, success } from '../../helpers'
 
-export async function getAllMedications (req, {
+export async function getAllMedication (req, {
   Connection,
   medicationRepository
 }) {

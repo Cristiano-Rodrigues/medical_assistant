@@ -1,4 +1,4 @@
-import { getAllMedications } from '../../controllers'
+import { getAllMedication } from '../../controllers'
 import { auth } from '../../middlewares'
 import { medicationRepository } from '../../repositories'
 import { wrapController, wrapMiddleware, Connection, jwt } from '../../adapters'
@@ -13,7 +13,7 @@ export default router => {
   router.get(
     '/medication',
     authMiddleware,
-    wrapController(getAllMedications, params)
+    wrapController(getAllMedication, params)
   )
 
   return router
