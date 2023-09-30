@@ -9,7 +9,7 @@ export async function getMedicationById (req, {
 
   try {
     connection = new Connection()
-    const { getById } = await medicationRepository(connection)
+    const { getById } = medicationRepository(connection)
 
     const { id: patientId } = req.user
     const result = await getById({
