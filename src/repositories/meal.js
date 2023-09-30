@@ -13,7 +13,17 @@ export function mealRepository (connection) {
     return await connection.query(sql.query, sql.values)
   }
 
+  async function getAll (patientId) {
+    const sql = {
+      query: 'SELECT m.* FROM meal AS m JOIN patient AS ' +
+        'p ON m.patient_id = p.id WHERE p.id = ? LIMIT 1000;',
+      values: [patientId]
+    }
+    return await connection.query(sql.query, sql.values)
+  }
+
   return {
-    register
+    register,
+    getAll
   }
 }
