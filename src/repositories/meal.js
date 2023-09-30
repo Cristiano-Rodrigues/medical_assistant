@@ -22,8 +22,20 @@ export function mealRepository (connection) {
     return await connection.query(sql.query, sql.values)
   }
 
+  async function getById ({
+    patientId,
+    mealId
+  }) {
+    const sql = {
+      query: 'SELECT m.* FROM meal AS m JOIN patient AS p ON m.patient_id = p.id WHERE p.id = ? AND m.id = ?;',
+      values: [patientId, mealId]
+    }
+    return (await connection.query(sql.query, sql.values))[0]
+  }
+
   return {
     register,
-    getAll
+    getAll,
+    getById
   }
 }
