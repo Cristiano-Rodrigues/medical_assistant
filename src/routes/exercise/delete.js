@@ -2,6 +2,7 @@ import { deleteExercise } from '../../controllers'
 import { auth } from '../../middlewares'
 import { exerciseRepository } from '../../repositories'
 import { wrapController, wrapMiddleware, Connection, jwt } from '../../adapters'
+import { validateDeleteExercise } from '../../validators'
 
 export default router => {
   const params = {
@@ -13,6 +14,7 @@ export default router => {
   router.delete(
     '/exercise/:id',
     authMiddleware,
+    validateDeleteExercise,
     wrapController(deleteExercise, params)
   )
 
