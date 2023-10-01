@@ -57,11 +57,26 @@ export function doctorRepository (connection) {
     return await connection.query(sql.query, sql.values)
   }
 
+  async function update (doctorId, {
+    name,
+    phone,
+    alternativeNumber,
+    email
+  }) {
+    const sql = {
+      query: 'UPDATE doctor SET name = ?, phone = ?, ' +
+        'alternative_number = ?, email = ? WHERE id = ? LIMIT 1;',
+      values: [name, phone, alternativeNumber, email, doctorId]
+    }
+    return await connection.query(sql.query, sql.values)
+  }
+
   return {
     register,
     getByEmail,
     getAll,
     getById,
-    remove
+    remove,
+    update
   }
 }
