@@ -32,9 +32,26 @@ export function patientRepository (connection) {
     return (await connection.query(sql.query, sql.values))[0]
   }
 
+  async function update (id, {
+    name,
+    gender,
+    born,
+    address,
+    phone,
+    email
+  }) {
+    const sql = {
+      query: 'UPDATE patient SET name = ?, gender = ?, born = ?, ' +
+        'address = ?, phone = ?, email = ? WHERE id = ? LIMIT 1',
+      values: [name, gender, born, address, phone, email, id]
+    }
+    return await connection.query(sql.query, sql.values)
+  }
+
   return {
     create,
     getByEmail,
-    getById
+    getById,
+    update
   }
 }
