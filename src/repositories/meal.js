@@ -33,9 +33,22 @@ export function mealRepository (connection) {
     return (await connection.query(sql.query, sql.values))[0]
   }
 
+  async function remove ({
+    mealId,
+    patientId
+  }) {
+    const sql = {
+      query: 'DELETE FROM meal WHERE id = ? AND patient_id = ?',
+      values: [mealId, patientId]
+    }
+    return await connection.query(sql.query, sql.values)
+  }
+
+
   return {
     register,
     getAll,
-    getById
+    getById,
+    remove
   }
 }
