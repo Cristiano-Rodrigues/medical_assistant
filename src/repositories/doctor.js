@@ -34,9 +34,22 @@ export function doctorRepository (connection) {
     return await connection.query(sql.query, sql.values)
   }
 
+  async function getById ({
+    patientId,
+    doctorId
+  }) {
+    const sql = {
+      query: 'SELECT d.* FROM doctor AS d JOIN patient AS p ' +
+        'ON d.patient_id = p.id WHERE p.id = ? AND d.id = ? LIMIT 1;',
+      values: [patientId, doctorId]
+    }
+    return (await connection.query(sql.query, sql.values))[0]
+  }
+
   return {
     register,
     getByEmail,
-    getAll
+    getAll,
+    getById
   }
 }
