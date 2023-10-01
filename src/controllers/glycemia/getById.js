@@ -9,7 +9,7 @@ export async function getGlycemiaById (req, {
 
   try {
     connection = new Connection()
-    const { getById } = await glycemiaRepository(connection)
+    const { getById } = glycemiaRepository(connection)
 
     const { id: patientId } = req.user
     const result = await getById({
