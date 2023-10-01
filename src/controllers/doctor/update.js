@@ -29,7 +29,6 @@ export async function updateDoctor (req, {
 
     return success()
   } catch (error) {
-    console.log(error)
     return serverError(error)
   } finally {
     connection.close()
