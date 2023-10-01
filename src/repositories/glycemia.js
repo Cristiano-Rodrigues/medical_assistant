@@ -34,9 +34,22 @@ export function glycemiaRepository (connection) {
     return (await connection.query(sql.query, sql.values))[0]
   }
 
+  async function remove ({
+    glycemiaId,
+    patientId
+  }) {
+    const sql = {
+      query: 'DELETE FROM glycemia WHERE id = ? AND patient_id = ?',
+      values: [glycemiaId, patientId]
+    }
+    return await connection.query(sql.query, sql.values)
+  }
+
+
   return {
     register,
     getAll,
-    getById
+    getById,
+    remove
   }
 }
