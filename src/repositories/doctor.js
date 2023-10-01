@@ -46,10 +46,22 @@ export function doctorRepository (connection) {
     return (await connection.query(sql.query, sql.values))[0]
   }
 
+  async function remove ({
+    doctorId,
+    patientId
+  }) {
+    const sql = {
+      query: 'DELETE FROM doctor WHERE id = ? AND patient_id = ?',
+      values: [doctorId, patientId]
+    }
+    return await connection.query(sql.query, sql.values)
+  }
+
   return {
     register,
     getByEmail,
     getAll,
-    getById
+    getById,
+    remove
   }
 }
