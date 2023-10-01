@@ -31,9 +31,21 @@ export function weightRepository (connection) {
     return (await connection.query(sql.query, sql.values))[0]
   }
 
+  async function remove ({
+    weightId,
+    patientId
+  }) {
+    const sql = {
+      query: 'DELETE FROM weight WHERE id = ? AND patient_id = ?',
+      values: [weightId, patientId]
+    }
+    return await connection.query(sql.query, sql.values)
+  }
+
   return {
     register,
     getAll,
-    getById
+    getById,
+    remove
   }
 }
